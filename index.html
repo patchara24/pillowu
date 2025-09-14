@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pillow | การนอนหลับที่ดี, ชีวิตที่ดี</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;700&display=swap');
+
+        :root {
+            --blue-light: #f0f8ff;
+            --blue-mid: #007bff;
+            --blue-dark: #004085;
+            --white: #fff;
+            --gray: #666;
+            --light-gray: #eee;
+            --dark-gray: #495057;
+        }
+        
+        body {
+            font-family: 'Sarabun', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--blue-light);
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        /* --- Header --- */
+        .main-header {
+            background-color: var(--white);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .main-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+        .main-nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+        .main-nav ul li {
+            margin-left: 25px;
+        }
+        .main-nav ul li a {
+            text-decoration: none;
+            color: var(--blue-dark);
+            font-weight: 700;
+            transition: color 0.3s ease;
+        }
+        .main-nav ul li a:hover {
+            color: var(--blue-mid);
+        }
+        .nav-icons .fa-shopping-cart {
+            font-size: 1.2em;
+            color: var(--blue-dark);
+            margin-left: 20px;
+        }
+
+        /* --- Hero Section --- */
+        .hero-new {
+            position: relative;
+            width: 100%;
+            min-height: 700px;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            box-sizing: border-box;
+            overflow: hidden;
+            text-align: left;
+        }
+        .hero-background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('./improve-sleep-quality-1-scaled.jpg') no-repeat center center/cover;
+            z-index: 1;
+            filter: brightness(80%) grayscale(20%);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 0;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        .hero-text {
+            flex: 0 0 50%;
+            max-width: 50%;
+            color: var(--white);
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+            animation: slideInLeft 1s ease-out;
+        }
+        .hero-text h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        .hero-text p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+        .btn-cta {
+            background-color: var(--blue-mid);
+            color: var(--white);
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 700;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+        }
+        .btn-cta:hover {
+            background-color: var(--blue-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 64, 133, 0.4);
+        }
+
+        /* --- Sections common style --- */
+        .section {
+            padding: 80px 0;
+            text-align: center;
+        }
+        .section-title {
+            font-size: 2.5em;
+            color: var(--blue-dark);
+            margin-bottom: 40px;
+        }
+        
+        /* --- Animation on scroll effects --- */
+        .animated {
+            opacity: 0;
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        .animated.slide-up {
+            transform: translateY(50px);
+        }
+        .animated.slide-in-right {
+            transform: translateX(50px);
+        }
+        .animated.slide-in-left {
+            transform: translateX(-50px);
+        }
+        .animated.in-view {
+            opacity: 1;
+            transform: translateY(0) translateX(0);
+        }
+
+        /* --- About Section --- */
+        .about-us {
+            background-color: var(--white);
+            padding: 80px 0;
+            box-shadow: inset 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        .about-us .content-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 40px;
+        }
+        .about-us .text-content {
+            flex: 1;
+            min-width: 300px;
+            text-align: left;
+        }
+        .about-us .text-content p {
+            font-size: 1em; /* แก้ไขขนาดตัวอักษรของเนื้อหาในส่วน About Us */
+        }
+        .about-us img {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- Products Section --- */
+        .pillow-types {
+            background-color: var(--blue-light);
+        }
+        .products-grid {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        .product-card {
+            background-color: var(--white);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .product-card h3 {
+            color: var(--blue-dark);
+            margin: 0;
+        }
+        .product-card p {
+            font-size: 1em;
+            color: var(--gray);
+            font-weight: 400;
+        }
+        
+        /* --- Subscription Section --- */
+        .subscription-section {
+            background-color: var(--white);
+        }
+        .pricing-section {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .price-card {
+            background-color: var(--white);
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            width: 100%;
+            max-width: 300px;
+            border: 2px solid transparent;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .price-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+        .price-card h2 {
+            font-size: 1.5em;
+            color: var(--blue-dark);
+            margin-bottom: 10px;
+        }
+        .price-card .price {
+            font-size: 3em;
+            font-weight: 700;
+            color: var(--blue-mid);
+            margin: 0;
+        }
+        .price-card .price small {
+            font-size: 0.5em;
+            font-weight: 400;
+            color: var(--gray);
+        }
+        .price-card ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px 0;
+            text-align: left;
+            flex-grow: 1;
+            width: 100%;
+        }
+        .price-card ul li {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--light-gray);
+            color: var(--gray);
+            font-size: 0.9em;
+        }
+        .price-card ul li:last-child {
+            border-bottom: none;
+        }
+        .btn-sub {
+            display: block;
+            width: 100%;
+            padding: 12px 20px;
+            background-color: var(--blue-mid);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 700;
+            transition: background-color 0.3s ease;
+            border: none;
+            cursor: pointer;
+            margin-top: auto;
+        }
+        .btn-sub:hover {
+            background-color: var(--blue-dark);
+        }
+
+        /* --- Footer --- */
+        .main-footer {
+            background-color: var(--blue-dark);
+            color: var(--white);
+            padding: 40px 0;
+            text-align: center;
+        }
+        .main-footer .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        .footer-logo img {
+            height: 50px;
+            filter: brightness(0) invert(1);
+        }
+        .social-icons a {
+            color: var(--white);
+            font-size: 1.5em;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+        .social-icons a:hover {
+            color: var(--blue-mid);
+        }
+        .footer-nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .footer-nav ul li a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+
+        /* --- Keyframe Animations --- */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideInLeft {
+            from { transform: translateX(-100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideInRight {
+            from { transform: translateX(100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* --- Responsive Design สำหรับมือถือ --- */
+        @media (max-width: 768px) {
+            .main-header .container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .main-nav ul {
+                margin-top: 15px;
+            }
+            .main-nav ul li {
+                margin: 0 10px;
+            }
+            .hero-new {
+                min-height: 500px;
+                padding-top: 100px;
+            }
+            .hero-content {
+                text-align: center;
+            }
+            .hero-text {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+            .hero-text h1 {
+                font-size: 2.5em;
+            }
+            .hero-text p {
+                font-size: 1em;
+            }
+            .about-us .content-wrapper {
+                flex-direction: column;
+            }
+            .about-us .text-content {
+                text-align: center;
+            }
+            .about-us img {
+                max-width: 100%;
+            }
+            .products-grid, .pricing-section {
+                flex-direction: column;
+                align-items: center;
+            }
+            .price-card, .product-card {
+                width: 90%;
+                margin-bottom: 20px;
+            }
+            .footer-nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <a href="#">
+                <img src="./logo.png" alt="Pillow Logo" class="logo-img">
+            </a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#home">หน้าหลัก</a></li>
+                    <li><a href="#about">เกี่ยวกับเรา</a></li>
+                    <li><a href="#products">ประเภทหมอน</a></li>
+                    <li><a href="#subscription">สมัครสมาชิก</a></li>
+                    <li><a href="#"><i class="fas fa-shopping-cart nav-icons"></i></a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero-new" id="home">
+        <div class="hero-background-image"></div>
+        <div class="container hero-content">
+            <div class="hero-text">
+                <h1>เปลี่ยนการนอนให้เป็น<br>การพักผ่อนที่แท้จริง</h1>
+                <p>ด้วยบริการหมอนแบบรายเดือน เพื่อสุขภาพการนอนที่ดีที่สุดของคุณ<br>โดยไม่ต้องกังวลเรื่องการเปลี่ยนหมอนเองอีกต่อไป</p>
+                <a href="#subscription" class="btn-cta">เลือกแผนที่ใช่สำหรับคุณ</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section about-us" id="about">
+        <div class="container content-wrapper animated slide-up">
+            <img src="./postman.jpg" alt="กระบวนการผลิตหมอน" class="animated slide-in-left">
+            <div class="text-content animated slide-in-right">
+                <h2 class="section-title">เรื่องราวของเรา: หมอนแบบ Subscription</h2>
+                <p>เราเชื่อว่าการนอนหลับที่ดีคือรากฐานของชีวิตที่มีคุณภาพ<br>นั่นจึงเป็นเหตุผลที่เราสร้างบริการหมอนแบบ **Subscription**</p>
+                <p>คุณเพียงแค่เลือกแผนที่ต้องการและจ่ายค่าบริการรายเดือน<br>จากนั้นเราจะทำการ **ส่งหมอนใหม่ให้คุณทุกๆ 6 เดือน**<br>พร้อมบริการจัดส่งฟรี และรับประกันคุณภาพหมอนทุกใบ<br>เพื่อให้คุณมั่นใจได้ว่าจะได้รับความสบายและสุขภาพที่ดีที่สุด</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section pillow-types" id="products">
+        <div class="container animated slide-up">
+            <h2 class="section-title">ประเภทหมอนของเรา</h2>
+            <div class="products-grid">
+                <div class="product-card animated slide-up">
+                    <img src="./เมมโมรี่โฟม1.jpg" alt="หมอนเมมโมรีโฟม">
+                    <h3>เมมโมรีโฟม</h3>
+                    <p>หมอนที่รองรับสรีระได้ดีที่สุด ลดอาการปวดคอ เหมาะสำหรับผู้ที่ต้องการความนุ่มแน่นและคืนตัวช้า</p>
+                </div>
+                <div class="product-card animated slide-up">
+                    <img src="./ขนเป็ด.jpg" alt="หมอนไมโครเจล">
+                    <h3>ไมโครเจล</h3>
+                    <p>ให้สัมผัสที่นุ่มสบายคล้ายขนห่านเทียม ระบายอากาศได้ดีเยี่ยม ไม่กักเก็บความร้อน</p>
+                </div>
+                <div class="product-card animated slide-up">
+                    <img src="./ยางพารา.jpg" alt="หมอนยางพาราธรรมชาติ">
+                    <h3>ยางพาราธรรมชาติ</h3>
+                    <p>หมอนเพื่อสุขภาพที่ป้องกันไรฝุ่นและเชื้อโรคได้ตามธรรมชาติ รองรับน้ำหนักได้ดี</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section subscription-section" id="subscription">
+        <div class="container animated slide-up">
+            <h2 class="section-title">เลือกแผนการสมัครสมาชิก</h2>
+            <div class="pricing-section">
+                <div class="price-card animated slide-up">
+                    <h2>เริ่มต้น</h2>
+                    <p class="price">59<small> บาท/เดือน</small></p>
+                    <ul>
+                        <li>✅ ได้รับหมอน 1 ใบ ทุกๆ 6 เดือน</li>
+                        <li>✅ บริการจัดส่งฟรี</li>
+                        <li>✅ หมอนเมมโมรีโฟม</li>
+                        <li>✅ การดูแลลูกค้าผ่านอีเมล</li>
+                    </ul>
+                    <a href="#" class="btn-sub">เลือกแผนนี้</a>
+                </div>
+                <div class="price-card animated slide-up">
+                    <h2>ยอดนิยม</h2>
+                    <p class="price">99<small> บาท/เดือน</small></p>
+                    <ul>
+                        <li>✅ ได้รับหมอน 1 ใบ ทุกๆ 6 เดือน</li>
+                        <li>✅ บริการจัดส่งฟรี</li>
+                        <li>✅ หมอนไมโครเจล</li>
+                        <li>✅ การดูแลลูกค้าผ่านแชท</li>
+                    </ul>
+                    <a href="#" class="btn-sub">เลือกแผนนี้</a>
+                </div>
+                <div class="price-card animated slide-up">
+                    <h2>พรีเมียม</h2>
+                    <p class="price">199<small> บาท/เดือน</small></p>
+                    <ul>
+                        <li>✅ ได้รับหมอน 2 ใบ ทุกๆ 6 เดือน</li>
+                        <li>✅ บริการจัดส่งฟรี</li>
+                        <li>✅ หมอนยางพาราพรีเมียม</li>
+                        <li>✅ บริการดูแลลูกค้าส่วนตัว</li>
+                    </ul>
+                    <a href="#" class="btn-sub">เลือกแผนนี้</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="container footer-content">
+            <div class="footer-logo">
+                <img src="https://i.imgur.com/uRj0p6G.png" alt="Pillow Logo">
+            </div>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+            <nav class="footer-nav">
+                <ul>
+                    <li><a href="#">จัดส่งฟรี</a></li>
+                    <li><a href="#">รับประกันคุณภาพทุกใบ</a></li>
+                </ul>
+            </nav>
+            <p>&copy; 2025 PILLOW. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // JavaScript สำหรับการทำให้ส่วนต่างๆ เด้งขึ้นมาเมื่อเลื่อนหน้าจอ
+        const observerOptions = {
+            root: null,
+            rootMargin: "0px",
+            threshold: 0.2
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("in-view");
+                    // observer.unobserve(entry.target); // สามารถ uncomment ถ้าอยากให้ animation เล่นแค่ครั้งเดียว
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animated').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+
+</body>
+</html>
